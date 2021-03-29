@@ -10,8 +10,8 @@ const basePath = __dirname + "/pages";
 
 
 routes.get('/', (request, response) => response.sendFile(basePath + "/index.html"))
-routes.get('/jobs', (request, response) => response.sendFile(basePath + "/job.html"))
-routes.get('/jobs/edit', (request, response) => response.sendFile(basePath + "/job-edit.html"))
+routes.get('/job', (request, response) => response.sendFile(basePath + "/job.html"))
+routes.get('/job/edit', (request, response) => response.sendFile(basePath + "/job-edit.html"))
 routes.get('/profile', (request, response) => response.sendFile(basePath + "/profile.html"))
 
 
