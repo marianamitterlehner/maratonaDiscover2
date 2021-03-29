@@ -4,6 +4,10 @@ const app = express();
 const routes = require("./routes")
 
 
+//usando tamplate engine
+app.set('view engine', 'ejs'); //trabalha em cima da junção do html e js
+
+
                                     // use serve para add propriedades ao servidor
 app.use(express.static("public")); //habilitar arquivos statics //cria rotas staticas
 
