@@ -34,32 +34,33 @@
           <img id="logo" src="/images/logo.svg" alt="Logo" />
           <span id="notification">
             <img src="/images/alert-octagon.svg" alt="Alerta" />
-            Você tem 2 horas livres no seu dia
+            Você tem <%=  %>  horas livres no seu dia
           </span>
           <a href="/profile" id="avatar-profile">
-            <p>Jakeliny <span>Ver perfil</span></p>
+            <p><%= profile.name  %> <span>Ver perfil</span></p>
             <img
-              src="https://avatars.githubusercontent.com/u/17316392?s=460&u=6912a91a70bc89745a2079fdcdad3bc3ce370f13&v=4"
+              src="<%= profile.avatar %>"
             />
           </a>
         </section>
 
         <div class="separator"></div>
 
+        <!-- Resumo dos jobs -->
         <section id="summary" class="animate-up delay-1">
           <h2 class="sr-only">Sumário</h2>
 
           <div class="info">
             <div class="total">
-              <strong>12</strong>
+              <strong> <%=  %> </strong>
               Projetos ao total
             </div>
             <div class="in-progress">
-              <strong>7</strong>
+              <strong> <%=  %> </strong>
               Em andamento
             </div>
             <div class="finished">
-              <strong>4</strong>
+              <strong> <%= %> </strong>
               Encerrados
             </div>
           </div>
@@ -79,28 +80,39 @@
         <h1 class="sr-only">Trabalhos</h1>
 
         <div class="cards">
-          <% jobs.forEach(function(jobs){ %>  <!-- para cada item executa uma funcao-->
+          <% job.forEach(function(jobs){ %>  <!-- para cada item executa uma funcao-->
             <!-- begin card -->
-            <div class="card progress" data-id="1">
-              <div class="id column">1</div>
+            <div class="card <%= job.status %> " data-id="<%= job.id %> ">
+              <div class="id column"><%= job.id %> </div>
               <div class="name column">
-                Pizzaria Guloso
+                <%= job.name %> 
               </div>
               <div class="deadline column">
                 <span>Prazo</span>
-                <p>3 dias para a entrega</p>
+                <p>  <!--mostrar o status dinamico-->
+                  <% if( job.status == "progress") {%>
+                    <%= job.remaining %>  dias para a entrega
+                  <% } else { %> 
+                      Encerrado   
+                  <% } %> 
+                </p>
+
               </div>
               <div class="amount column">
                 <span>Valor</span>
-                <p>R$ 4500,00</p>
+                <p>R$ <%= job.budget.toFixed(2).replace('.',',') %> </p> <!-- usa o fixed pra marcar as casas decimais-->
               </div>
               <div class="status badge column">
-                Em andamento
+                <%= job.status === 'done' ? 'Encerrado' : 'Em Andamento' %> <!-- if para destinguir o status-->
               </div>
+
+              
+              <!-- Acoes DELETE / EDIT -->
+
               <div class="actions column flex">
                 <p class="sr-only">Ações</p>
                 <a 
-                  href="/job/edit" 
+                  href="/job/<% job.id %> " 
                   class="button white edit" 
                   title="Editar Job">
                   <img src="/images/edit-24.svg" alt="Editar Job" />
