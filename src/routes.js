@@ -90,18 +90,18 @@ const Job = {
                     ...jobs,
                     remaining: remaining,
                     status: status,
-                
+                    budget: Job.services.calculateBudget(jobs),
                 } 
                 
             })
 
             //no meu return continuo chamando o profile e o job 
-            return response.render(basePath + "index", {job : updatesJob, profile: Profile.data}) 
+            return response.render(basePath + "index", {jobs : updatesJob, profile: Profile.data}) 
         },
 
         create(request, response) {
 
-            const lastId = Job.data[Job.data.length - 1].id || 1; // gera um id 
+            const lastId = Job.data[Job.data.length - 1].id || 0; // gera um id 
 
                 Job.data.push({ //especificando o que está vindo do meu body pela requisicao
                     id: lastId + 1, //pegar o id gerado na var id e soma mais 1 de incremento
@@ -134,7 +134,7 @@ const Job = {
              
             job.budget = Job.services.calculateBudget(job)
 
-            return response.render(basePath + "job-edit",  { job:job})
+            return response.render(basePath + "job-edit",  { jobs:job})
         },
 
         update(request, response){
@@ -168,6 +168,19 @@ const Job = {
 
              /**redireciona para mesma pagina do id vindo da requisicao */
              return response.redirect('/job/' + jobId)
+        },
+
+        delete(request, response){
+            const jobId = request.params.id
+
+            Job.data = Job.data.filter(job => Number(job.id) !== Number(jobId))
+            /**  Job.data = Job.data.filter((job) => {
+                if(Number(job.id) !== Number(jobId)){
+                    Job.data.delete(job)
+                }
+            })*/
+
+            return response.redirect('/')
         }
     },
 
@@ -209,6 +222,7 @@ routes.post('/job', Job.controller.create)
 
 routes.get('/job/:id', Job.controller.show)
 routes.post('/job/:id', Job.controller.update)
+routes.post('/job/delete/:id', Job.controller.delete)
 
 routes.get('/profile', Profile.controller.index)
 routes.post('/profile', Profile.controller.update)

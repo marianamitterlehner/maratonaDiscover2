@@ -80,18 +80,18 @@
         <h1 class="sr-only">Trabalhos</h1>
 
         <div class="cards">
-          <% job.forEach(function(jobs){ %>  <!-- para cada item executa uma funcao-->
+          <% jobs.forEach(function(jobs){ %>  <!-- para cada item executa uma funcao-->
             <!-- begin card -->
-            <div class="card <%= job.status %> " data-id="<%= job.id %> ">
-              <div class="id column"><%= job.id %> </div>
+            <div class="card <%= jobs.status %> " data-id="<%= jobs.id %> ">
+              <div class="id column"><%= jobs.id %> </div>
               <div class="name column">
-                <%= job.name %> 
+                <%= jobs.name %> 
               </div>
               <div class="deadline column">
                 <span>Prazo</span>
                 <p>  <!--mostrar o status dinamico-->
-                  <% if( job.status == "progress") {%>
-                    <%= job.remaining %>  dias para a entrega
+                  <% if( jobs.status == "progress") {%>
+                    <%= jobs.remaining %>  dias para a entrega
                   <% } else { %> 
                       Encerrado   
                   <% } %> 
@@ -100,10 +100,10 @@
               </div>
               <div class="amount column">
                 <span>Valor</span>
-                <p>R$ <%= job.budget.toFixed(2).replace('.',',') %> </p> <!-- usa o fixed pra marcar as casas decimais-->
+                <p>R$ <%= jobs.budget.toFixed(2).replace('.',',') %></p> <!-- usa o fixed pra marcar as casas decimais-->
               </div>
               <div class="status badge column">
-                <%= job.status === 'done' ? 'Encerrado' : 'Em Andamento' %> <!-- if para destinguir o status-->
+                <%= jobs.status === 'done' ? 'Encerrado' : 'Em Andamento' %> <!-- if para destinguir o status-->
               </div>
 
               
@@ -112,7 +112,7 @@
               <div class="actions column flex">
                 <p class="sr-only">Ações</p>
                 <a 
-                  href="/job/<% job.id %> " 
+                  href="/job/<%= jobs.id %>  " 
                   class="button white edit" 
                   title="Editar Job">
                   <img src="/images/edit-24.svg" alt="Editar Job" />
@@ -137,7 +137,7 @@
         <h3>Excluir Job</h3>
         <p>Quer mesmo excluir esse job? <br/>
         Ele será apagado para sempre.  
-        <p>
+        </p>
         <footer>
           <a 
             class="button gray" 
