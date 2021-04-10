@@ -7,8 +7,9 @@ const Profile = require('../models/profile');
 module.exports = {
     index(request, response) {
 
-        /** const Jobs = Job.get(); */
-        const updatesJob = Jobs.get().map((jobs) =>{
+        const jobs = Jobs.get();
+
+        const updatesJob = jobs.map((jobs) =>{
             
             const remaining = JobUtil.remainingDays(jobs);
             // condicional de status
@@ -23,8 +24,9 @@ module.exports = {
             
         })
 
+        const profile = Profile.get();
         //no meu return continuo chamando o profile e o job 
-        return response.render("index", {jobs : updatesJob, profile: Profile.get()}) 
+        return response.render("index", {jobs : updatesJob, profile: profile }) 
     },
 
     create(request, response) {
@@ -48,6 +50,8 @@ module.exports = {
     },
 
     show(request, response){
+        /**variavel para o metodo get */
+        const jobs = Jobs.get();
             /**
              * mostrar a pagina do job
              */
@@ -55,24 +59,28 @@ module.exports = {
         const jobId = request.params.id;
 
         // verifica entre o id dentro Job.data se o que foi passado na requisicao e igual
-        const job = Job.data.find(job => Number(job.id) === Number(jobId))
+        const job = jobs.find(jobs => Number(jobs.id) === Number(jobId))
 
         if(!job){
             return response.send("Not found")
         }
-         
-        job.budget = Job.services.calculateBudget(job)
+        
 
-        return response.render("job-edit",  { jobs:job})
+        job.budget = JobUtil.calculateBudget(job)
+
+        /** o job e a variavel do Show, jobs e a variavel que vai para o html que padronizei para jobs */
+        return response.render("job-edit",  {jobs:job})
     },
 
     update(request, response){
-        /** Alteracao do job */
         //id passado como parametro na url
         const jobId = request.params.id;
+        const jobs = Jobs.get();
+
+        /** Alteracao do job */
 
         // verifica entre o id dentro Job.data se o que foi passado na requisicao e igual
-        const job = Job.data.find(job => Number(job.id) === Number(jobId))
+        const job = jobs.find(job => Number(job.id) === Number(jobId))
 
         if(!job){
             return response.send("Not found")
@@ -89,20 +97,25 @@ module.exports = {
         }
 
         /** job.data recebe a alteracao se o jobId for igual ao id do array que ele ta pecorrendo */
-         Job.data = Job.data.map(job=>{
+        const newJobs = jobs.map(job => {
              if(Number(job.id) === Number(jobId)){
                  job = updatedJob
              }
+
+             return job;
          })
+         /** solicita a modificacao para o model*/
+         Jobs.update(newJobs);
 
          /**redireciona para mesma pagina do id vindo da requisicao */
-         return response.redirect('/job/' + jobId)
+        return response.redirect('/job/' + jobId)
     },
 
     delete(request, response){
         const jobId = request.params.id
 
-        Job.data = Job.data.filter(job => Number(job.id) !== Number(jobId))
+        Jobs.delete(jobId);
+        
         /**  Job.data = Job.data.filter((job) => {
             if(Number(job.id) !== Number(jobId)){
                 Job.data.delete(job)

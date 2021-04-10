@@ -1,3 +1,6 @@
+/** tive que puxar os dados do model para o values-hours funcionar */
+const Profile = require('../models/profile');
+
 module.exports = {
     remainingDays(jobs) {
         // calculo de tempo restante
@@ -22,5 +25,5 @@ module.exports = {
         //restam tantos dias
         return dayDiff;
     },
-    calculateBudget: (job) => Profile.data["value-hours"] * job["total-hours"]
+    calculateBudget: (job) => Profile.get()["value-hours"] * job["total-hours"]
 }

@@ -20,7 +20,10 @@ module.exports = {
     get() {
         return data;
     },
-    update(Newdata) {
-        data = Newdata;
+    update(NewJobs) {
+        data = NewJobs;
+    }, 
+    delete(id) {
+        data = data.filter(job => Number(job.id) !== Number(id))
     }
-}
+}  
