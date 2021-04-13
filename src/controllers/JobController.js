@@ -9,14 +9,15 @@ module.exports = {
         const jobs = Jobs.get(); /**tudo que eu importo em letra maiuscula, o que eu crio minuscula */
         const lastId = jobs[jobs.length - 1].id || 0; // gera um id 
 
-            jobs.push({ //especificando o que está vindo do meu body pela requisicao
-                id: lastId + 1, //pegar o id gerado na var id e soma mais 1 de incremento
-                name: request.body.name,
-                "daily-hours": request.body["daily-hours"],
-                "total-hours": request.body["total-hours"],
-                created_at: Date.now() //atribuindo data de hoje
-            })
-            return response.redirect('/');
+        Jobs.create({ //especificando o que está vindo do meu body pela requisicao
+            id: lastId + 1, //pegar o id gerado na var id e soma mais 1 de incremento
+            name: request.body.name,
+            "daily-hours": request.body["daily-hours"],
+            "total-hours": request.body["total-hours"],
+            created_at: Date.now() //atribuindo data de hoje
+        });
+        
+        return response.redirect('/');
         
     },
 
