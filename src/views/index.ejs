@@ -34,7 +34,11 @@
           <img id="logo" src="/images/logo.svg" alt="Logo" />
           <span id="notification">
             <img src="/images/alert-octagon.svg" alt="Alerta" />
-            Você tem <%=  %>  horas livres no seu dia
+            <% if(timeFree <= 0){ %> 
+                Você nao tem horas livres!
+            <% } else { %> 
+              Você tem <%= timeFree %>  horas livres no seu dia!
+            <% } %> 
           </span>
           <a href="/profile" id="avatar-profile">
             <p><%= profile.name  %> <span>Ver perfil</span></p>
@@ -52,15 +56,15 @@
 
           <div class="info">
             <div class="total">
-              <strong> <%=  %> </strong>
+              <strong> <%= status.total %> </strong>
               Projetos ao total
             </div>
             <div class="in-progress">
-              <strong> <%=  %> </strong>
+              <strong> <%= status.progress %> </strong>
               Em andamento
             </div>
             <div class="finished">
-              <strong> <%= %> </strong>
+              <strong> <%= status.done %> </strong>
               Encerrados
             </div>
           </div>

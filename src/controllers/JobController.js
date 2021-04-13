@@ -2,32 +2,8 @@
 /**chamando o dados do model */
 const Jobs = require('../models/job');
 const JobUtil = require('../utils/jobUtil');
-const Profile = require('../models/profile');
 
 module.exports = {
-    index(request, response) {
-
-        const jobs = Jobs.get();
-
-        const updatesJob = jobs.map((jobs) =>{
-            
-            const remaining = JobUtil.remainingDays(jobs);
-            // condicional de status
-            const status = remaining <= 0 ? 'done' : 'progress'
-            
-            return {
-                ...jobs,
-                remaining: remaining,
-                status: status, 
-                budget: JobUtil.calculateBudget(jobs),
-            } 
-            
-        })
-
-        const profile = Profile.get();
-        //no meu return continuo chamando o profile e o job 
-        return response.render("index", {jobs : updatesJob, profile: profile }) 
-    },
 
     create(request, response) {
         const jobs = Jobs.get(); /**tudo que eu importo em letra maiuscula, o que eu crio minuscula */

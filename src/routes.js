@@ -5,6 +5,7 @@ const routes = express.Router();
 
 const JobController = require('./controllers/JobController');
 const ProfileController = require('./controllers/ProfileController');
+const DashboardController = require('./controllers/DashboardController');
 
 //const basePath = __dirname + "/views/"; //rota base // nao e  mais usado 
 
@@ -17,7 +18,7 @@ const ProfileController = require('./controllers/ProfileController');
 
 /**  ROTAS   */
 
-routes.get('/', JobController.index)
+routes.get('/', DashboardController.index)
 
 routes.get('/job', JobController.save)
 routes.post('/job', JobController.create)
