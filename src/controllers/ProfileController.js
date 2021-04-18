@@ -5,12 +5,14 @@ const Profile = require('../models/Profile');
 
 
 module.exports = {
-    index(request, response) {
-        return response.render("profile", {profile: Profile.get() }) 
+    async index(request, response) {
+
+        const profile = await Profile.get();
+        return response.render("profile", {profile: await profile }) 
         /** Puxa o metodo get que contem o return da const data */
     },
 
-    update(request, response) {
+    async update(request, response) {
         // pegar os dados
         const data = request.body
 
@@ -28,10 +30,12 @@ module.exports = {
 
         //qual sera o valor da minha hora?
         const valueHour =  data["value-hours"] = data["monthly-budget"] / monthlyTotalHours
+        
+        const profile = await Profile.get();
 
-         Profile.update({
+        Profile.update({
               /** passar como paramentro os dados que eu quero que altere dentro do model */
-             ...Profile.get(), /**spret espalhar dados ja existentes */
+             ...profile, /**spret espalhar dados ja existentes */
              ...request.body, /**sub escreve o que vem do profile */
              "value-hours": valueHour
             /** esse valueHour vai ser direcionado para o perfil atraves do value-hours */

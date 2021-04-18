@@ -4,11 +4,11 @@ const JobUtil = require('../utils/jobUtil');
 const Profile = require('../models/profile');
 
 module.exports = {
-    index(request, response) {
+    async index(request, response) {
 
         /**chamando os dados do model */
         const jobs = Jobs.get();
-        const profile = Profile.get();
+        const profile = await Profile.get();
 
         /**variaveis */
         let statusCount = {

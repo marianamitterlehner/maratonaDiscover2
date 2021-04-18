@@ -36,14 +36,16 @@ const initDb = {
                 monthly_budget, 
                 days_per_week, 
                 hours_per_day, 
-                vacation_per_year
+                vacation_per_year,
+                value_hours 
             ) VALUES (
                 "Mariana",
                 "https://avatars.githubusercontent.com/u/51057747?v=4",
                 358521,
                 54,
                 2,
-                8
+                8,
+                4
             ); 
         `);
         
