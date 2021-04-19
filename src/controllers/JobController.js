@@ -52,37 +52,38 @@ module.exports = {
     async update(request, response){
         //id passado como parametro na url
         const jobId = request.params.id;
-        const jobs = await Jobs.get();
+        /*const jobs = await Jobs.get();*/
 
         /** Alteracao do job */
 
         // verifica entre o id dentro Job.data se o que foi passado na requisicao e igual
-        const job = jobs.find(job => Number(job.id) === Number(jobId))
+       /* const job = jobs.find(job => Number(job.id) === Number(jobId))
 
         if(!job){
             return response.send("Not found")
-        }
+        }*/
 
         /**Alteracao */
          
         const updatedJob = {
             /**ideal seria um if para ver se o dado veio vazio */
-            ...job, //o que eu ja tinha caso alguem esqueca de alterar um dado
+            //...job, //o que eu ja tinha caso alguem esqueca de alterar um dado
             name: request.body.name, // recebo o nome que vem do body
             "total-hours": request.body["total-hours"], //reescrevendo as variaveis que ja estao no job
-            "daily-hours": request.body["daily-hours"],
+            "daily-hours": request.body["daily-hours"]
         }
 
         /** job.data recebe a alteracao se o jobId for igual ao id do array que ele ta pecorrendo */
-        const newJobs = jobs.map(job => {
+        /*const newJobs = jobs.map(job => {
              if(Number(job.id) === Number(jobId)){
                  job = updatedJob
              }
 
              return job;
-         })
+         })*/
+
          /** solicita a modificacao para o model*/
-         Jobs.update(newJobs);
+        await Jobs.update(updatedJob, jobId);
 
          /**redireciona para mesma pagina do id vindo da requisicao */
         return response.redirect('/job/' + jobId)
