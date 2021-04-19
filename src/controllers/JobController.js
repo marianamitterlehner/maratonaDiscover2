@@ -5,12 +5,12 @@ const JobUtil = require('../utils/jobUtil');
 
 module.exports = {
 
-    create(request, response) {
-        const jobs = Jobs.get(); /**tudo que eu importo em letra maiuscula, o que eu crio minuscula */
-        const lastId = jobs[jobs.length - 1].id || 0; // gera um id 
+    async create(request, response) {
+        const jobs = await Jobs.get(); /**tudo que eu importo em letra maiuscula, o que eu crio minuscula */
+       /**const lastId = jobs[jobs.length - 1].id || 0; // gera um id  */ 
 
-        Jobs.create({ //especificando o que está vindo do meu body pela requisicao
-            id: lastId + 1, //pegar o id gerado na var id e soma mais 1 de incremento
+        await Jobs.create({ //especificando o que está vindo do meu body pela requisicao
+           // id: lastId + 1, //pegar o id gerado na var id e soma mais 1 de incremento
             name: request.body.name,
             "daily-hours": request.body["daily-hours"],
             "total-hours": request.body["total-hours"],
@@ -26,9 +26,9 @@ module.exports = {
        /**return response.render(basePath + "job") //versao anterior */  
     },
 
-    show(request, response){
+    async show(request, response){
         /**variavel para o metodo get */
-        const jobs = Jobs.get();
+        const jobs = await Jobs.get();
             /**
              * mostrar a pagina do job
              */
@@ -49,10 +49,10 @@ module.exports = {
         return response.render("job-edit",  {jobs:job})
     },
 
-    update(request, response){
+    async update(request, response){
         //id passado como parametro na url
         const jobId = request.params.id;
-        const jobs = Jobs.get();
+        const jobs = await Jobs.get();
 
         /** Alteracao do job */
 
@@ -88,10 +88,10 @@ module.exports = {
         return response.redirect('/job/' + jobId)
     },
 
-    delete(request, response){
+    async delete(request, response){
         const jobId = request.params.id
 
-        Jobs.delete(jobId);
+        await Jobs.delete(jobId);
         
         /**  Job.data = Job.data.filter((job) => {
             if(Number(job.id) !== Number(jobId)){

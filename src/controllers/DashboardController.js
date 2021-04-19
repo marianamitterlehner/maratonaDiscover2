@@ -7,7 +7,7 @@ module.exports = {
     async index(request, response) {
 
         /**chamando os dados do model */
-        const jobs = Jobs.get();
+        const jobs = await Jobs.get();
         const profile = await Profile.get();
 
         /**variaveis */

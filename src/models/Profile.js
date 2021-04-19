@@ -4,11 +4,11 @@ module.exports = {  /** exportando o data que e uma constante */
     
     async get(){
 
-        const db = await Database();
+            const db = await Database();
 
-        const data = await db.get(`SELECT * FROM profiles`);
+            const data = await db.get(`SELECT * FROM profiles`);
 
-        await db.close()
+            await db.close()
 
         return {
             name: data.name,
